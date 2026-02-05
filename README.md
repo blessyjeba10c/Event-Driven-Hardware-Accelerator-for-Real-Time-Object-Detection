@@ -343,8 +343,7 @@ The FPGA demonstration focuses on a **real-time object detection pipeline driven
 
 This verification framework closely mirrors practical deployment scenarios and highlights the advantages of the proposed event-driven architecture over traditional CPU-based approaches. The successful implementation on the ZCU102 FPGA validates the accelerator’s capability to efficiently handle sparse, asynchronous events, achieve real-time inference, and operate effectively in high-performance edge and embedded vision applications.
 
-<img width="1008" height="642" alt="image" src="https://github.com/user-attachments/assets/d990d9c3-d8a5-4492-a2c8-c2abeb6662f4" />
-
+<img width="1008" height="642" alt="Screenshot 2026-02-05 223754" src="https://github.com/user-attachments/assets/de3254a7-14bc-490e-993a-c9dc3cb6393e" />
 
 
 
