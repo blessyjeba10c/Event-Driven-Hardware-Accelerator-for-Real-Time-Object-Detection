@@ -179,6 +179,9 @@ The top-level design integrates the event-driven control logic with the computat
 4.  **Aggregation Unit:** Collects partial results from PEs to form the final detection output.
 
 
+![event](https://github.com/user-attachments/assets/d4c93552-778e-41fb-bcce-a45be732f318)
+
+
 <p align="center">
    <img width="462" height="386" alt="System Hierarchy Diagram" src="https://github.com/user-attachments/assets/1f5b5569-8884-4038-8ec9-15bbf6b168bf" />
 </p>
