@@ -182,9 +182,91 @@ The top-level design integrates the event-driven control logic with the computat
 ![event](https://github.com/user-attachments/assets/d4c93552-778e-41fb-bcce-a45be732f318)
 
 
-<p align="center">
-   <img width="462" height="386" alt="System Hierarchy Diagram" src="https://github.com/user-attachments/assets/1f5b5569-8884-4038-8ec9-15bbf6b168bf" />
-</p>
+
+
+## 🧩 Component-Level Architecture Description (Event-Driven & Sparse Connectivity)
+
+| Component Level | Description | Details |
+|----------------|-------------|---------|
+| Cluster Array | 4×2 Event-Driven PE Clusters | Adjustable |
+| 4×2 Event GLB Clusters | Adjustable |
+| 4×2 Event Router Clusters | Adjustable |
+| Event PE Cluster | 3×3 Event-Driven PEs | Sparse-activated |
+| Event GLB Cluster | 3×2 SRAM Banks (iacts/events) | Event buffers |
+|  | 4×2 SRAM Banks (psums) | Sparse psums |
+| Event Router Cluster | 3 Event routers | Event-based |
+|  | 3 Weight routers | Sparse weights |
+|  | 4 Psum routers | Event-triggered |
+| Control Layer | Layer-wise Event Controller | Dynamic execution |
+| Event Handling | Global Event Queue | Asynchronous |
+
+---
+
+### Event-Driven Architecture Overview
+
+Building upon conventional CNN accelerator designs, our architecture introduces a **fully event-driven processing paradigm with sparse connectivity**, enabling computation to occur **only when meaningful events are detected**. This fundamentally departs from frame-based execution and significantly reduces redundant computation, memory access, and power consumption.
+
+As illustrated in Fig. X, the core of the system is organized as a **4×2 event-driven cluster array**, which can be scaled up or down depending on performance and resource requirements. For FPGA validation, the design is configured with a reduced cluster size to accommodate logic and memory constraints, while preserving architectural scalability for future ASIC implementations.
+
+---
+
+### Event Encoding and Sparse Data Preparation
+
+The **event encoder group** is responsible for converting incoming sensor or image data into sparse event streams. Instead of processing full frames, only regions exhibiting significant changes generate events. These events are compactly represented and stored in event buffers, minimizing SRAM utilization.
+
+Sparse activations and weights are handled natively by the architecture, ensuring that both memory access and computation scale with the number of active events rather than input size.
+
+---
+
+### Event-Driven Cluster Array
+
+At the heart of the accelerator lies the **Event PE Cluster**, consisting of a **3×3 array of event-aware Processing Elements (PEs)**. Each PE remains idle until it receives a valid event, at which point computation is triggered. This sparse activation model drastically reduces idle switching activity and improves energy efficiency.
+
+---
+
+### Event Global Load Balancer (Event GLB)
+
+The **Event GLB Cluster** functions as the distributed on-chip memory system. It includes:
+- Dedicated SRAM banks for storing sparse input activations and events  
+- Separate SRAM banks for partial sums (psums) generated during event-triggered computation  
+
+This separation allows concurrent access patterns and reduces contention during high event density.
+
+---
+
+### Event Routing Network
+
+The **Event Router Cluster** manages internal data movement within the cluster array. It consists of:
+- Event routers for distributing event packets  
+- Weight routers optimized for sparse weight access  
+- Psum routers that forward results only when valid computations occur  
+
+Compared to traditional always-on routing logic, the routers are **simplified and event-triggered**, activating only when data movement is required. This design choice enhances routing efficiency while reducing unnecessary switching activity.
+
+---
+
+### Layer-Level Event Control
+
+A dedicated **Layer Controller** orchestrates event flow across different layers of the object detection pipeline. It manages:
+- Event synchronization between layers  
+- Dynamic enabling and disabling of clusters  
+- Sparse execution control based on event density  
+
+This enables seamless execution of multi-layer detection networks without requiring global frame synchronization.
+
+---
+
+### Key Architectural Advantages
+
+- Sparse connectivity reduces memory footprint and computation load  
+- Event-triggered execution minimizes latency and power consumption  
+- Modular and scalable cluster design supports diverse object detection models  
+- FPGA-friendly architecture with clear ASIC migration path  
+
+---
+
+This event-driven and sparsely connected architecture enables **real-time object detection with significantly lower latency and energy consumption than conventional CPU-based or frame-driven accelerators**, making it highly suitable for edge intelligence applications.
+
 
 
 ## License
