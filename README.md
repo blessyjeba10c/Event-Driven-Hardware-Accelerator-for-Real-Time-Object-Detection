@@ -333,7 +333,7 @@ To guarantee data integrity and correct synchronization between the GLB and down
 
 This event-driven GLB architecture plays a critical role in enabling **low-latency, energy-efficient real-time object detection**, ensuring that memory access scales with event activity rather than input size.
 
-##  FPGA Verification
+#####  FPGA Verification
 
 We implemented and verified the proposed **event-driven object detection accelerator** on an FPGA platform using a **2×2 event cluster configuration** deployed on the **Xilinx ZCU102 FPGA board**. The complete RTL design was synthesized using **Xilinx Vivado**, and the generated bitstream was programmed onto the ZCU102 to validate functional correctness, timing behavior, and real-time performance of the accelerator. This FPGA-based implementation enabled detailed evaluation of the event-driven control logic, sparse routing network, and event-aware processing elements under realistic hardware conditions.
 
@@ -344,6 +344,17 @@ The FPGA demonstration focuses on a **real-time object detection pipeline driven
 This verification framework closely mirrors practical deployment scenarios and highlights the advantages of the proposed event-driven architecture over traditional CPU-based approaches. The successful implementation on the ZCU102 FPGA validates the accelerator’s capability to efficiently handle sparse, asynchronous events, achieve real-time inference, and operate effectively in high-performance edge and embedded vision applications.
 
 <img width="1008" height="642" alt="Screenshot 2026-02-05 223754" src="https://github.com/user-attachments/assets/de3254a7-14bc-490e-993a-c9dc3cb6393e" />
+
+
+###### Customized CNN Layer for Real-Time Object Detection (ZCU102 Demo)
+
+To demonstrate real-time object detection on the **Xilinx ZCU102 FPGA**, we designed a **customized lightweight CNN layer** optimized specifically for **event-driven execution and low-latency inference**. Unlike conventional CNN layers that process dense feature maps, this customized layer operates on **sparse, event-based activations**, ensuring that computation is performed only when relevant events are present.
+
+The CNN layer integrates **event-triggered convolution, simplified activation logic, and sparse partial-sum accumulation**, making it well-suited for FPGA deployment under strict timing and power constraints. The layer configuration is tailored to balance detection accuracy with hardware efficiency, enabling real-time processing on the ZCU102 without relying on CPU-based acceleration.
+
+This customized CNN layer serves as the core inference block in the ZCU102 demonstration, validating the feasibility of **event-driven, hardware-accelerated object detection** for high-performance edge and embedded vision applications.
+
+![WhatsApp Image 2026-02-04 at 9 34 50 PM](https://github.com/user-attachments/assets/dfa05fd6-0596-4deb-9958-cfd84f52f244)
 
 
 
