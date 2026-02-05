@@ -135,7 +135,7 @@ This project introduces an **event-driven hardware accelerator for real-time obj
 
 ---
 
-## 🚀 Contributions
+##  Contributions
 
 * **Event-Driven Accelerator Architecture**
     Designed a novel event-driven hardware accelerator for real-time object detection, where computation is triggered only by meaningful events instead of continuous frame-based processing. This architecture significantly reduces redundant operations, lowers latency, and improves energy efficiency compared to traditional CPU-based inference.
@@ -155,7 +155,34 @@ This project introduces an **event-driven hardware accelerator for real-time obj
 * **Low-Latency Event-Based Dataflow**
     By integrating event-driven control with massively parallel hardware execution, the proposed dataflow eliminates unnecessary memory accesses and clock cycles, achieving faster inference and lower power consumption than CPU-based object detection systems.
 
+
 ---
+
+
+## System Hierarchy Diagram
+
+The diagram below illustrates the interaction between the Event Generator, the Scheduler, and the Processing Element (PE) Array.
+
+![System Hierarchy Diagram](event.jpg)
+
+---
+
+## Implementation
+
+### Top-Level Architecture
+
+The top-level design integrates the event-driven control logic with the computation data path. Key components include:
+
+1.  **Event Interface:** Captures incoming signals and converts them into an asynchronous event stream.
+2.  **Scheduler & Router:** Distributes events to the PE array using a load-balancing algorithm.
+3.  **PE Array:** A customizable grid of processing elements that perform the core convolution and activation operations.
+4.  **Aggregation Unit:** Collects partial results from PEs to form the final detection output.
+
+
+<p align="center">
+   <img width="462" height="386" alt="System Hierarchy Diagram" src="https://github.com/user-attachments/assets/1f5b5569-8884-4038-8ec9-15bbf6b168bf" />
+</p>
+
 
 ## License
 
