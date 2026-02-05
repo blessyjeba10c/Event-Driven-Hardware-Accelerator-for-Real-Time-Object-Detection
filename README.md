@@ -336,6 +336,22 @@ To guarantee data integrity and correct synchronization between the GLB and down
 
 This event-driven GLB architecture plays a critical role in enabling **low-latency, energy-efficient real-time object detection**, ensuring that memory access scales with event activity rather than input size.
 
+##  Event-Based Router Architecture
+
+The proposed **event-based router architecture** is inspired by the HM-NoC routing framework of **Eyeriss v2**, but is significantly redesigned to support **event-driven computation and sparse dataflow**. Unlike the original architecture, where routing decisions are made at the output endpoints using multiple multiplexers (MUXes), our design adopts an **early-decision routing strategy** tailored for asynchronous event streams.
+
+In this architecture, as soon as an event arrives at the router, it is immediately processed by an **input-side MUX**, which operates in conjunction with the `in_sel` signal to determine the selected input data. The routing decision is completed early in the pipeline, while the `routing_mode` (`out_sel`) signal specifies the destination output port. By shifting routing intelligence closer to the input, the design reduces redundant selection logic, minimizes routing latency, and achieves a **75% reduction in MUX usage** compared to the original Eyeriss v2 router.
+
+The router cluster is composed of **three event routers**, **three weight routers**, and **three psum routers**, enabling parallel and independent routing of sparse event data, weights, and partial sums. Each router is implemented using **circuit switching with MUX-based logic**, and **systolic registers** are inserted between router connections to ensure timing closure and stable data propagation across the cluster.
+
+To support robust event-driven communication, the router employs a **three-way handshake protocol** using `Valid`, `Ready`, and the newly introduced `data_in_sel` control signal. While `Valid` and `Ready` ensure safe data transfer, `data_in_sel` explicitly selects the active input channel, enabling fine-grained control over sparse and asynchronous event traffic. The `routing_mode` (`out_sel`) signal further directs the event to the appropriate output port.
+
+Compared to the original Eyeriss v2 router, this event-based router architecture provides enhanced flexibility, improved control over sparse data movement, and reduced hardware complexity. These design choices make the router highly suitable for **event-driven object detection accelerators**, where irregular data patterns and low-latency routing are critical for real-time performance.
+
+![WhatsApp Image 2026-02-05 at 11 11 21 PM](https://github.com/user-attachments/assets/02b0632d-21cb-4cb6-9eec-c705384dd75e)
+
+
+
 # FPGA Verification
 
 We implemented and verified the proposed **event-driven object detection accelerator** on an FPGA platform using a **2×2 event cluster configuration** deployed on the **Xilinx ZCU102 FPGA board**. The complete RTL design was synthesized using **Xilinx Vivado**, and the generated bitstream was programmed onto the ZCU102 to validate functional correctness, timing behavior, and real-time performance of the accelerator. This FPGA-based implementation enabled detailed evaluation of the event-driven control logic, sparse routing network, and event-aware processing elements under realistic hardware conditions.
