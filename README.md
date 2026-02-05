@@ -333,7 +333,7 @@ To guarantee data integrity and correct synchronization between the GLB and down
 
 This event-driven GLB architecture plays a critical role in enabling **low-latency, energy-efficient real-time object detection**, ensuring that memory access scales with event activity rather than input size.
 
-#####  FPGA Verification
+#  FPGA Verification
 
 We implemented and verified the proposed **event-driven object detection accelerator** on an FPGA platform using a **2×2 event cluster configuration** deployed on the **Xilinx ZCU102 FPGA board**. The complete RTL design was synthesized using **Xilinx Vivado**, and the generated bitstream was programmed onto the ZCU102 to validate functional correctness, timing behavior, and real-time performance of the accelerator. This FPGA-based implementation enabled detailed evaluation of the event-driven control logic, sparse routing network, and event-aware processing elements under realistic hardware conditions.
 
@@ -346,7 +346,7 @@ This verification framework closely mirrors practical deployment scenarios and h
 <img width="1008" height="642" alt="Screenshot 2026-02-05 223754" src="https://github.com/user-attachments/assets/de3254a7-14bc-490e-993a-c9dc3cb6393e" />
 
 
-###### Customized CNN Layer for Real-Time Object Detection (ZCU102 Demo)
+#Customized CNN Layer for Real-Time Object Detection (ZCU102 Demo)
 
 To demonstrate real-time object detection on the **Xilinx ZCU102 FPGA**, we designed a **customized lightweight CNN layer** optimized specifically for **event-driven execution and low-latency inference**. Unlike conventional CNN layers that process dense feature maps, this customized layer operates on **sparse, event-based activations**, ensuring that computation is performed only when relevant events are present.
 
