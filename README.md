@@ -66,7 +66,7 @@ This approach minimizes idle cycles and enables faster-than-CPU inference.
 
 ---
 
-## 🛠 FPGA Design Overview
+##  FPGA Design Overview
 
 ### Open-Source FPGA Prototype
 * Fully open-source FPGA implementation
@@ -267,7 +267,7 @@ This enables seamless execution of multi-layer detection networks without requir
 
 This event-driven and sparsely connected architecture enables **real-time object detection with significantly lower latency and energy consumption than conventional CPU-based or frame-driven accelerators**, making it highly suitable for edge intelligence applications.
 
-## 🌐 Global Buffer (GLB) Architecture (Event-Driven & Sparse)
+##  Global Buffer (GLB) Architecture (Event-Driven & Sparse)
 
 #### Global Buffer Architecture
 
@@ -332,6 +332,19 @@ To guarantee data integrity and correct synchronization between the GLB and down
 ---
 
 This event-driven GLB architecture plays a critical role in enabling **low-latency, energy-efficient real-time object detection**, ensuring that memory access scales with event activity rather than input size.
+
+##  FPGA Verification
+
+We implemented and verified the proposed **event-driven object detection accelerator** on an FPGA platform using a **2×2 event cluster configuration** deployed on the **Xilinx ZCU102 FPGA board**. The complete RTL design was synthesized using **Xilinx Vivado**, and the generated bitstream was programmed onto the ZCU102 to validate functional correctness, timing behavior, and real-time performance of the accelerator. This FPGA-based implementation enabled detailed evaluation of the event-driven control logic, sparse routing network, and event-aware processing elements under realistic hardware conditions.
+
+For data transmission, the design leverages **PL-side high-speed interfaces** of the ZCU102 to receive event data directly from a host PC. A **custom UART-based communication protocol** was implemented to support asynchronous event streams, allowing sparse, event-driven data to be transferred efficiently to the programmable logic (PL). This setup ensures reliable communication while preserving the asynchronous nature of event-based processing.
+
+The FPGA demonstration focuses on a **real-time object detection pipeline driven by event-based inputs**. On the host PC side, a **Python-based graphical user interface (GUI)** was developed to capture input data, generate sparse events based on motion or pixel-level changes, and transmit these events to the FPGA for inference. Once received, the event-driven accelerator processes the incoming event stream in real time and outputs detection results with low latency.
+
+This verification framework closely mirrors practical deployment scenarios and highlights the advantages of the proposed event-driven architecture over traditional CPU-based approaches. The successful implementation on the ZCU102 FPGA validates the accelerator’s capability to efficiently handle sparse, asynchronous events, achieve real-time inference, and operate effectively in high-performance edge and embedded vision applications.
+
+<img width="1008" height="642" alt="image" src="https://github.com/user-attachments/assets/d990d9c3-d8a5-4492-a2c8-c2abeb6662f4" />
+
 
 
 
